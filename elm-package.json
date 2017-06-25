@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
-    "summary": "Bricks are small re-usable Html documents. They can be stored in models, serialized/deserialized in Json and can be obtained from a server.",
-    "repository": "https://github.com/user/project.git",
+    "summary": "Bricks are small re-usable Html blocks that can be stored in models and Json.",
+    "repository": "https://github.com/fabiommendes/elm-bricks.git",
     "license": "BSD3",
     "source-directories": [
         ".",

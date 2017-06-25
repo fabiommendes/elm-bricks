@@ -7,14 +7,9 @@ module Bricks.Json
 {-| JSON decoders and encoders.
 
 
-# Decode functions
-
-@docs decodeValue, decodeString, viewValue, viewString
-
-
 # Decoders
 
-@docs brick, attr, children
+@docs brick, attr
 
 -}
 
