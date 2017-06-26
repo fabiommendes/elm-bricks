@@ -9,6 +9,7 @@ module Bricks
         , class
         , decodeString
         , decodeValue
+        , encode
         , getText
         , tag
         , text
@@ -17,7 +18,8 @@ module Bricks
         , viewValue
         )
 
-{-| Namespace module
+{-| The main module for the Bricks library. This module has functions to build
+and modify bricks and a few functions to convert to/from JSON.
 
 
 # Types
@@ -51,7 +53,7 @@ Json and string respresentations
 @docs view, viewValue, viewString
 
 
-# Standard decoders
+# Standard encoders/decoders
 
 The main decoding interface is done through the decodeString and decodeValue
 functions. If you need more options or if you need to use the decoders
@@ -62,14 +64,14 @@ to Brick values.
 
 Example
 
-    json = "{...}"
+    json = "{...some valid JSON data here...}"
 
     brick =
         case decodeString json of
             Ok x -> x
             Err _ -> brick 'div' [] []
 
-@docs decodeValue, decodeString
+@docs decodeValue, decodeString, encode
 
 -}
 
@@ -78,6 +80,7 @@ import Bricks.Types as Types exposing (..)
 import Html exposing (Html, div, pre)
 import Html.Attributes as HAttrs
 import Json.Decode as Dec exposing (Value)
+import Json.Encode as Enc
 
 
 --------------------------------------------------------------------------------
@@ -125,7 +128,7 @@ brick : String -> List (Attrs -> Attrs) -> List Brick -> Brick
 brick tag attrs children =
     let
         attrs =
-            List.foldl (\f lst -> f lst) emptyAttrs []
+            List.foldl (\f lst -> f lst) defaultArgs []
     in
     Brick tag attrs (Children children)
 
@@ -139,9 +142,9 @@ text st =
 
 {-| Initial list of empty attributes
 -}
-emptyAttrs : Attrs
-emptyAttrs =
-    [ Classes [], Id Nothing ]
+defaultArgs : Attrs
+defaultArgs =
+    [ Classes [] ]
 
 
 
@@ -240,12 +243,7 @@ view brick =
                     HAttrs.classList (List.map (\x -> ( x, True )) lst)
 
                 Id id ->
-                    case id of
-                        Just value ->
-                            HAttrs.id value
-
-                        Nothing ->
-                            HAttrs.id ""
+                    HAttrs.id id
 
                 Attr name value ->
                     HAttrs.attribute name value
@@ -323,3 +321,10 @@ decodeValue value =
 decodeString : String -> Result String Brick
 decodeString value =
     Dec.decodeString Json.brick value
+
+
+{-| Encode brick element as a Json string
+-}
+encode : Int -> Brick -> String
+encode n brick =
+    Enc.encode n (Json.brickEncoder brick)

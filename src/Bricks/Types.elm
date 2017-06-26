@@ -1,6 +1,6 @@
 module Bricks.Types exposing (..)
 
-{-| Define all general purpose types for the Bricks module.
+{-| Define the most used types for the Bricks module.
 
 You generally should not access the types defined in this module directly and
 should prefer the constructor functions defined in the Bricks main module.
@@ -42,7 +42,7 @@ type Children
 type Attr
     = Attr String String
     | Classes (List String)
-    | Id (Maybe String)
+    | Id String
     | Value String
     | Action ActionType
 

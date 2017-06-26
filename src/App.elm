@@ -2,6 +2,7 @@ module App exposing (..)
 
 import Bricks
 import Html
+import Result
 
 
 json : String
@@ -27,9 +28,18 @@ json =
 """
 
 
+view st =
+    Html.div []
+        [ Bricks.viewString st
+        , Html.pre []
+            [ Html.text <| Bricks.encode 2 (Bricks.decodeString st |> Result.withDefault (Bricks.text "error"))
+            ]
+        ]
+
+
 main =
     Html.beginnerProgram
-        { view = Bricks.viewString
+        { view = view
         , model = json
         , update = \msg m -> m
         }
