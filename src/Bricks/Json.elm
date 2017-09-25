@@ -25,21 +25,16 @@ complicated JSON pipelines.
 Bricks are encoded with the following JSON format
 
     {
-        "tag": tag name (string, required),
-        "attrs": array of attributes (optional, see bellow),
-        "children": array of bricks (optional)
+        "tag": "tag-name",
+        "attrs": [["attr-name", "attr-value"], ...],
+        "children": [child elements]
     }
 
-Each attribute must be encoded as an array with a few special options:
-
-**Regular attributes**
-
-    ["attr-name", "attr-value"] (both are strings)
-
-**Id**
-
-    "id-name"
-
+"tag-name" is a required string field that should hold any valid tag name. "attrs" is a an optional
+value that should hold a list of pairs of strings with the attribute name and the 
+corresponding value. Finally, "children" is an optional list of child elements. It 
+accepts two kinds of elements: either pure strings (representing the text content inside 
+a tag) or other brick objects.
 -}
 
 import Bricks.Types exposing (..)
@@ -258,18 +253,18 @@ attrEncoder attr =
             list [ str name, str value ]
 
         Classes lst ->
-            list [ str "classList", list (List.map str lst) ]
+            list [ str "class", str (String.join " " lst) ]
 
         Id id ->
             list [ str "id", str id ]
 
         Value data ->
-            list [ str "valueAttr", str data ]
+            list [ str "=value", str data ]
 
         Action action ->
             case action of
                 NoOp ->
-                    list [ str "actionNoOp", str "" ]
+                    list [ str "=noOp", str "" ]
 
 
 

@@ -1,5 +1,5 @@
 {
-    "version": "1.0.0",
+    "version": "2.0.1",
     "summary": "Bricks are small re-usable Html blocks that can be stored in models and Json.",
     "repository": "https://github.com/fabiommendes/elm-bricks.git",
     "license": "BSD3",

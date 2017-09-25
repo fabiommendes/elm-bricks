@@ -273,7 +273,7 @@ view brick =
             tag attrs_ children_
 
 
-{-| Decode a Json String object directly as a Html element.
+{-| Decode a JSON String directly as an Html element.
 -}
 viewString : String -> Html msg
 viewString str =
@@ -285,7 +285,7 @@ viewString str =
             decodeErr err
 
 
-{-| Decode a Json Value object directly as a Html element.
+{-| Decode a Json Value object directly as an Html element.
 -}
 viewValue : Value -> Html msg
 viewValue value =
